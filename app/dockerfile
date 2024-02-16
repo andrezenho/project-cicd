@@ -1,0 +1,7 @@
+FROM httpd:latest
+
+WORKDIR /usr/local/apache2/htdocs/
+#estamos copiando nosso arquivo ali index nesse diretorio para subir EKS
+COPY index.html /usr/local/apache2/htdocs/
+
+EXPOSE 80

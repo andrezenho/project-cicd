@@ -1,0 +1,21 @@
+stages:
+  - build
+
+build_images:
+  stage: build
+  #precisamos usar o proprio docker, imagem do docker para fazer o docker então vamos fazer ele gerar a imagem da aplicação
+  image: docker:20.10.16
+
+  services:
+    - docker:20.10.16
+
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+#nao eh bom usar credencial hard coded entao jogamos a variavel la do gitlab
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+#depois de logar vamos usar o script
+  script:
+    - docker build -t andrezenho/projeto-cicd:1.0 app/.
+  #depois de criar a imagem, vamos entao fazer o push
+    - docker push andrezenho/projeto-cicd:1.0
